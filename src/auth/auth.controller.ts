@@ -54,4 +54,12 @@ export class AuthController {
             data: result
         }
     }
+
+    @UseGuards(JwtAuthGuard)
+    @Post('signout')
+    @HttpCode(200)
+    async signout(@Req() req: any){
+        const result = await this.authService.signout(req.headers.authorization)
+        return result
+    }
 }

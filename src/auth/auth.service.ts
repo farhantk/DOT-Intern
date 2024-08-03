@@ -7,6 +7,8 @@ import { Logger } from "winston";
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { AuthValidation } from "./auth.validation";
+import * as jwt from 'jsonwebtoken';
+import { BlacklistService } from "./blacklist/blacklist.service";
 
 @Injectable()
 export class AuthService {
@@ -14,7 +16,8 @@ export class AuthService {
         private validationService: ValidationService,
         @Inject(WINSTON_MODULE_PROVIDER) private logger: Logger,
         private prismaService: PrismaService,
-        private jwtService: JwtService
+        private jwtService: JwtService,
+        private blacklistService: BlacklistService
     ){}
     
 
@@ -119,5 +122,22 @@ export class AuthService {
         })
         return user
     }
-  
+    
+    async signout(token: string) {
+      if (!token) {
+        return { message: 'No token provided' };
+      }
+      const authToken = token.split(' ')[1];
+      try {
+        const decoded: any = jwt.decode(authToken);
+        if (!decoded || !decoded.exp) {
+          return { message: 'Invalid token' };
+        }
+        const expiresAt = new Date(decoded.exp * 1000);
+        await this.blacklistService.blacklistToken(authToken, expiresAt);
+        return { message: 'Logout successful' };
+      } catch (error) {
+        return { message: 'Invalid token' };
+      }
+    }
 }

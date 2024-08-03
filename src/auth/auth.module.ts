@@ -5,6 +5,7 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { ValidationService } from '../common/validation.service';
+import { BlacklistService } from './blacklist/blacklist.service';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { ValidationService } from '../common/validation.service';
   providers: [
     AuthService, 
     JwtStrategy, 
-    ValidationService
+    ValidationService,
+    BlacklistService
   ],
   controllers: [AuthController]
 })

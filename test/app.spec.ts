@@ -42,7 +42,7 @@ describe('UserController', () => {
   })
 
   describe("POST /api/users/signin", ()=>{
-    it("Should be rejected if req is invalid",async () => {
+    it("Should be rejected, req is invalid",async () => {
       const response = await request(app.getHttpServer())
         .post('/api/users/signin')
         .send({
@@ -54,7 +54,7 @@ describe('UserController', () => {
       expect(response.body.errors).toBeDefined()
     })
 
-    it("Should be rejected if req is invalid",async () => {
+    it("Should be rejected, wrong email or password",async () => {
       const response = await request(app.getHttpServer())
         .post('/api/users/signin')
         .send({
@@ -82,7 +82,7 @@ describe('UserController', () => {
   })
 
   describe("Get /api/users/profile", () => {
-    it("Should be rejected if token is invalid or null", async () => {
+    it("Should be rejected, token is invalid or null", async () => {
         const response = await request(app.getHttpServer())
             .get('/api/users/profile')
             .set('Authorization', 'wrong');
@@ -93,7 +93,7 @@ describe('UserController', () => {
         expect(response.body.errors).toBeDefined();
     });
 
-    it("Should be rejected if token is invalid or null", async () => {
+    it("Should be success, token is valid", async () => {
         const response = await request(app.getHttpServer())
             .get('/api/users/profile')
             .set('Authorization', `Bearer ${token}`);
@@ -102,6 +102,32 @@ describe('UserController', () => {
 
         expect(response.status).toBe(200);
         expect(response.body.data).toBeDefined();
+    });
+  });
+
+  describe("Get /api/users/signout", () => {
+    it("Should be success to signout", async () => {
+        const response = await request(app.getHttpServer())
+            .post('/api/users/signout')
+            .set('Authorization', `Bearer ${token}`);
+
+        logger.info(response.body);
+
+        expect(response.status).toBe(200);
+        expect(response.body.message).toBeDefined();
+    });
+  });
+
+  describe("Get /api/users/profile", () => {
+    it("Should be rejected if token is invalid or null after signout", async () => {
+        const response = await request(app.getHttpServer())
+            .get('/api/users/profile')
+            .set('Authorization', `Bearer ${token}`);
+
+        logger.info(response.body);
+
+        expect(response.status).toBe(401);
+        expect(response.body.errors).toBeDefined();
     });
   });
 });

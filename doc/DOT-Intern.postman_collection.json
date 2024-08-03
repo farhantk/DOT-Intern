@@ -1,0 +1,1154 @@
+{
+	"info": {
+		"_postman_id": "5a3304a5-5f54-4ba8-8e42-676a05d0a2e9",
+		"name": "DOT-Intern",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27413904"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Sign Up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"farah\",\r\n    \"email\" : \"test11@gmail.com\",\r\n    \"street\" : \"test\",\r\n    \"city\" : \"test\",\r\n    \"province\" : \"test\",\r\n    \"country\" : \"test\",\r\n    \"postal_code\" : \"test\",\r\n    \"password\" : \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/users",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign In",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) { // Pastikan respons berhasil\r",
+									"    const responseJson = pm.response.json();\r",
+									"    if (responseJson.data && responseJson.token) {\r",
+									"        pm.collectionVariables.set('TOKEN', responseJson.token);\r",
+									"    } else {\r",
+									"        console.error('Token tidak ditemukan dalam respons:', responseJson);\r",
+									"    }\r",
+									"} else {\r",
+									"    console.error('Respons gagal dengan status code:', pm.response.code);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"test@gmail.com\",\r\n    \"password\" : \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/users/signin",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"admin\",\r\n    \"street\" : \"Cipadung\",\r\n    \"city\" : \"Bandung\",\r\n    \"province\" : \"Jawa Barat\",\r\n    \"country\" : \"Indonesia\",\r\n    \"postal_code\" : \"432523\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/users/profile",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/users",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{TOKEN}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Bank",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/bank",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"bank"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bank by Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/bank/16cf7155-4a28-4eb0-8204-c475bc31a92a",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"bank",
+								"16cf7155-4a28-4eb0-8204-c475bc31a92a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/bank/a438309c-f177-4832-9c59-4c105125d4ac",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"bank",
+								"a438309c-f177-4832-9c59-4c105125d4ac"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bank All",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/bank",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"bank"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"BNI\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/bank/16cf7155-4a28-4eb0-8204-c475bc31a92a",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"bank",
+								"16cf7155-4a28-4eb0-8204-c475bc31a92a"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Shipment",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"JNT new\",\r\n    \"price\": 10000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/shipment",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"shipment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Shipment by Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/shipment/8bba6038-5c78-46dc-91c1-5995e3b7232e",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"shipment",
+								"8bba6038-5c78-46dc-91c1-5995e3b7232e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Shipment All",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/shipment",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"shipment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Si Cepat\",\r\n    \"price\": 50000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/shipment/8bba6038-5c78-46dc-91c1-5995e3b7232e",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"shipment",
+								"8bba6038-5c78-46dc-91c1-5995e3b7232e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/shipment/8bba6038-5c78-46dc-91c1-5995e3b7232e",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"shipment",
+								"8bba6038-5c78-46dc-91c1-5995e3b7232e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment Method",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bank_id\": \"16cf7155-4a28-4eb0-8204-c475bc31a92a\",\r\n    \"name\": \"Virtual Account\",\r\n    \"acc_name\": \"PT WAHAHAHA\",\r\n    \"acc_number\": \"123123543543\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/payment",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"payment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Payment by Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/payment/94e3010e-b584-43a0-bd21-a88b681f1209",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"payment",
+								"94e3010e-b584-43a0-bd21-a88b681f1209"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Payment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/payment",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"payment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/payment/6c3f4bac-248d-4f90-b339-75b1326386b1",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"payment",
+								"6c3f4bac-248d-4f90-b339-75b1326386b1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bank_id\": \"16cf7155-4a28-4eb0-8204-c475bc31a92a\",\r\n    \"name\": \"Virtual Account\",\r\n    \"acc_name\": \"PT WAHAHAHA new\",\r\n    \"acc_number\": \"1231\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/payment/0c451da4-9dce-4573-b60e-5c03c90bb947",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"payment",
+								"0c451da4-9dce-4573-b60e-5c03c90bb947"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transaction",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"payment_method_id\": \"0c451da4-9dce-4573-b60e-5c03c90bb947\",\r\n    \"shipment_id\": \"aff08b97-8e7b-4ec1-8fe1-7930dfc44f89\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/transaction/6516dd97-b0c2-468a-ad32-6cf390ca99a9",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"transaction",
+								"6516dd97-b0c2-468a-ad32-6cf390ca99a9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/transaction/1eb519bf-2698-4883-9c56-84c45df93a6a",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"transaction",
+								"1eb519bf-2698-4883-9c56-84c45df93a6a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Process Transaction",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/transaction/1eb519bf-2698-4883-9c56-84c45df93a6a/process",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"transaction",
+								"1eb519bf-2698-4883-9c56-84c45df93a6a",
+								"process"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sending Transaction",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/transaction/1eb519bf-2698-4883-9c56-84c45df93a6a/send",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"transaction",
+								"1eb519bf-2698-4883-9c56-84c45df93a6a",
+								"send"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Finish Transaction",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/transaction/1eb519bf-2698-4883-9c56-84c45df93a6a/finish",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"transaction",
+								"1eb519bf-2698-4883-9c56-84c45df93a6a",
+								"finish"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/transaction/all",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"transaction",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by Auth",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/transaction",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"transaction"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Product by Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/product/f284db11-57a9-4946-9271-2975334d57dd",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"product",
+								"f284db11-57a9-4946-9271-2975334d57dd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Product All",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/product",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "name",
+									"value": "KTP",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "1000",
+									"type": "text"
+								},
+								{
+									"key": "desc",
+									"value": "ini desc",
+									"type": "text"
+								},
+								{
+									"key": "condition",
+									"value": "Bekas",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/product",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/Administrator/Downloads/Screenshot_14.png",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "KTP",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "1000",
+									"type": "text"
+								},
+								{
+									"key": "desc",
+									"value": "ini desc",
+									"type": "text"
+								},
+								{
+									"key": "condition",
+									"value": "Bekas",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/api/product/6516dd97-b0c2-468a-ad32-6cf390ca99a9",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"product",
+								"6516dd97-b0c2-468a-ad32-6cf390ca99a9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{DOMAIN}}/api/product/f284db11-57a9-4946-9271-2975334d57dd",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"api",
+								"product",
+								"f284db11-57a9-4946-9271-2975334d57dd"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "DOMAIN",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "TOKEN",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5MTBjOWM3ZS0xOGU4LTQwYTItOTY2My04YjQxYzg5ODA5NDEiLCJlbWFpbCI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNzIyMjY1MTY2LCJleHAiOjE3MjIzNTE1NjZ9.GzLQIul-0tmZp",
+			"type": "string"
+		},
+		{
+			"key": "REFRESH_TOKEN",
+			"value": "",
+			"disabled": true
+		}
+	]
+}

@@ -1,0 +1,103 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(uuid())
+  name String @db.VarChar(100)
+  email String @unique
+  role String @db.VarChar(100) @default("Customer")
+  street String @db.VarChar(100)
+  city String @db.VarChar(100)
+  province String @db.VarChar(100)
+  country String @db.VarChar(100)
+  postal_code String @db.VarChar(100)
+  password String @db.VarChar(100)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  trasactions  Transaction[] @relation("UserTransaction")
+
+  @@map("users")
+}
+
+model Bank {
+  id String @id @default(uuid())
+  name String @db.VarChar(100)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  payments  Payment_method[] @relation("BankPayments")
+  @@map("banks")
+}
+
+model Payment_method {
+  id String @id @default(uuid())
+  bank_id String @db.VarChar(100)
+  name String @db.VarChar(100)
+  acc_name String @db.VarChar(100)
+  acc_number String @db.VarChar(100)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  trasactions Transaction[] @relation("PaymentTransaction")
+  bank Bank @relation(fields: [bank_id], references: [id], name: "BankPayments")
+
+  @@map("payment_methods")
+}
+
+model Shipment {
+  id String @id @default(uuid())
+  name String @db.VarChar(100)
+  price Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  trasactions Transaction[] @relation("ShipmentTransaction")
+  @@map("shipments")
+}
+
+model Product {
+  id String @id @default(uuid())
+  name String @db.VarChar(100)
+  price Int
+  desc String @db.VarChar(100)
+  image String @db.VarChar(100)
+  condition String @db.VarChar(100) @default("Baru")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  trasactions Transaction[] @relation("ProductTransaction")
+  @@map("products")
+}
+
+model Transaction {
+  id String @id @default(uuid())
+  buyer_id String @db.VarChar(100)
+  payment_method_id String @db.VarChar(100)
+  product_id String @db.VarChar(100)
+  shipment_id String @db.VarChar(100)
+  status String @db.VarChar(100) @default("Menunggu konfirmasi")
+  amount Int
+  total Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+
+  user User @relation(fields: [buyer_id], references: [id], name: "UserTransaction")
+  payment Payment_method @relation(fields: [payment_method_id], references: [id], name: "PaymentTransaction")
+  product Product @relation(fields: [product_id], references: [id], name: "ProductTransaction")
+  shipment Shipment @relation(fields: [shipment_id], references: [id], name: "ShipmentTransaction")
+  @@map("transactions")
+}

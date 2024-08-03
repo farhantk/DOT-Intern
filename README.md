@@ -30,4 +30,4 @@ npm run dev
 
 
 
-[ApiCollection]: <http://jquery.com>
+[ApiCollection]: <https://github.com/farhantk/DOT-Intern/blob/master/doc/DOT-Intern.postman_collection.json>

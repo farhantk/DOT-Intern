@@ -14,9 +14,10 @@ Saya menggunakan design pattern MVC (Model-View-Controller) dalam NestJS selain 
 ## Installation
 
 ```sh
-cd dillinger
+git clone https://github.com/farhantk/DOT-Intern.git
+cd DOT-Intern
 npm install
-npx prisma
+npx prisma migrate dev
 npm run seed
 npm run dev 
 ```
